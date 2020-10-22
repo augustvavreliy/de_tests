@@ -1,3 +1,5 @@
+-- Schema
+
 CREATE TABLE Users (
 userId INT PRIMARY KEY,
 age INT 
@@ -16,6 +18,8 @@ date DATE,
 FOREIGN KEY (userId) REFERENCES Users(userId),
 FOREIGN KEY (itemId) REFERENCES Items(itemId)
 );
+
+-- Insert
 
 INSERT INTO Users VALUES (1, 17);
 INSERT INTO Users VALUES (2, 18);
@@ -36,7 +40,8 @@ INSERT INTO Purchases VALUES (4, 4, 4, '2020-08-10');
 INSERT INTO Purchases VALUES (5, 5, 1, '2020-10-10');
 INSERT INTO Purchases VALUES (6, 6, 3, '2020-09-10');
 
--- Zadanie 1
+-- А
+
 SELECT AVG(i.price) FROM Purchases p 
 JOIN Users u ON u.userId = p.userId
 JOIN Items i ON i.itemId = p.itemId
@@ -47,7 +52,8 @@ JOIN Users u ON u.userId = p.userId
 JOIN Items i ON i.itemId = p.itemId
 WHERE u.age >= 26 AND u.age <= 35;
 
---Zadanie 2
+-- Б
+
 SELECT strftime('%m', p.date) FROM Purchases p 
 JOIN Users u ON u.userId = p.userId
 JOIN Items i ON i.itemId = p.itemId
@@ -55,14 +61,16 @@ WHERE u.age >= 35
 GROUP BY strftime('%m', p.date)
 ORDER BY SUM(i.price) DESC LIMIT 1;
 
---Zadanie 3
+-- В
+
 SELECT i.itemId FROM Purchases p 
 JOIN Users u ON u.userId = p.userId
 JOIN Items i ON i.itemId = p.itemId
 GROUP BY i.itemId
 ORDER BY SUM(i.price) DESC LIMIT 1;
 
---Zadanie 4
+-- Г
+
 SELECT i.itemid,
       ROUND (SUM(i.price) * 1.0 / SUM(SUM(i.price)) OVER () , 2) as share
 FROM Purchases p 

@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen
 from newspaper import Article, Config
+from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
 
 user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
 config = Config()
@@ -30,4 +32,10 @@ for link in links:
     except :
         pass
     text += a.text
-print(text)
+
+cloud = WordCloud().generate(text)
+plt.figure(figsize=(8, 8), facecolor=None)
+plt.imshow(cloud, interpolation="bilinear")
+plt.axis("off")
+plt.tight_layout(pad=0)
+plt.show()
